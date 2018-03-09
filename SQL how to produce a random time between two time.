@@ -1,0 +1,12 @@
+SQL Server 
+在一个表格中生成一定范围内的随机日期时间.
+Code:
+DATEADD(second,ABS(CHECKSUM(NEWID()))%DATEDIFF(second,@BDate,@Edate),@BDate)
+其中 DateAdd (second/minite/hour/day...   , time , begin time) 三个参数分别为 时间单位,经过的时间数量,以及起始时间.
+此函数的作用是在起始时间上添加上一定数目(第二参数)的时间,从而生成一个新的时间.
+DateDiff(second/minite/hour/day... ,begin time, end time) 三个参数分别为时间单位,起始时间,结束时间.
+此函数的作用是将起始时间与结束时间之中的时间按照单位提取出来.
+Checksum(NewID()) 此函数可以生成随机数,注意!随机数有正有负.
+
+通过将以上三个函数组合起来,可以得到一个在SQL 生成一个范围内的随机日期的函数组合,其中 ABS(Checksum(NewID())为一个正随机数,
+以此随机数向范围内的时间取余数,则必定能得到一个小于等于范围时间的时间数量值,把他加给起始时间就可以得到符合范围的随机时间.
